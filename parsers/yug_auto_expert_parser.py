@@ -1,5 +1,5 @@
 from parsel import Selector
-import hashlib
+from utils.helpers import get_model_card_hash
 
 
 class YugAutoExpertParser:
@@ -13,12 +13,6 @@ class YugAutoExpertParser:
 
     def __init__(self, page_source):
         self.page_source = page_source
-
-    @staticmethod
-    def _model_card_hash(params):
-        return hashlib.sha256(
-            ''.join(params.values()).encode()
-        ).hexdigest()
 
     def _parse_helper(self, card):
         return {
@@ -36,7 +30,7 @@ class YugAutoExpertParser:
         result_pars_cars = []
         for card in model_cards:
             params = self._parse_helper(card)
-            params['hash'] = self._model_card_hash(params)
+            params['hash'] = get_model_card_hash(params)
             result_pars_cars.append(params)
 
         return result_pars_cars
