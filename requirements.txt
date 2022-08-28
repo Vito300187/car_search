@@ -1,0 +1,8 @@
+ipdb==0.13.9
+parsel==1.6.0
+pytest==7.1.2
+selenium==4.4.3
+webdriver-manager==3.8.3
+redis==4.3.4
+pyTelegramBotAPI==4.7.0
+pytest-xdist==2.5.0

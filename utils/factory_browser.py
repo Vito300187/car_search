@@ -1,19 +1,17 @@
+import os
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.service import Service
 
 
 def get_driver():
     options = webdriver.ChromeOptions()
+    options.add_experimental_option('excludeSwitches', ['enable-automation'])
+    if os.getenv('HEADLESS'):
+        options.add_argument('--headless')
+
     driver_browser = webdriver.Chrome(
-        service=Service(ChromeDriverManager().install()),
-        options=options.add_experimental_option('excludeSwitches', ['enable-automation'])
+        ChromeDriverManager().install(),
+        options=options
     )
-    # webdriver.DesiredCapabilities.CHROME['proxy'] = {
-    #     "httpProxy": "<HOST:PORT>",
-    #     "ftpProxy": "<HOST:PORT>",
-    #     "sslProxy": "<HOST:PORT>",
-    #     "proxyType": "MANUAL",
-    # }
-    driver_browser.maximize_window()
+    driver_browser.set_window_size(1920, 1080)
     return driver_browser

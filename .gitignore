@@ -1,2 +1,5 @@
 tasks_list.md
 .idea/
+dump.rdb
+.venv/
+*/__pycache__/

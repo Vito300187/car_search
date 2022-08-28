@@ -38,14 +38,13 @@ class YugAutoExpertPage(BasePage):
         )
 
     def _choose_model(self):
-        self.driver.find_element(
-            By.XPATH,
-            f'//div[contains(@class, "filter__list-item__name") and contains(text(), "{self.car.model.capitalize()}")]'
-        ).click()
-        self.wait_for_element_visibility(
-            (By.XPATH, f'//div[@class="list-tags"]//span[contains(text(), "{self.car.model.capitalize()}")]'),
-            timeout=5
-        )
+        list_item_name = (By.XPATH, f'//div[contains(@class, "filter__list-item__name") and contains(text(), "{self.car.model.title()}")]')
+        list_tags = (By.XPATH, f'//div[@class="list-tags"]//span[contains(text(), "{self.car.model.title()}")]')
+        if self.is_element_displayed(list_item_name, timeout=3):
+            self.driver.find_element(*list_item_name).click()
+            self.wait_for_element_visibility(list_tags, timeout=5)
+        else:
+            raise Exception('Models are not present on the page')
 
     def _choose_transmission(self):
         self.driver.find_element(*self.transmission_placeholder_locator).click()
