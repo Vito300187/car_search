@@ -7,7 +7,7 @@ def get_driver():
     options = webdriver.ChromeOptions()
     options.add_experimental_option('excludeSwitches', ['enable-automation'])
 
-    if os.environ['SELENOID']:
+    if os.getenv('SELENOID'):
         capabilities = {
             "browserName": "chrome",
             "browserVersion": "104.0",
@@ -17,12 +17,10 @@ def get_driver():
             }
         }
         driver_browser = webdriver.Remote('http://localhost:4444/wd/hub', options=options, desired_capabilities=capabilities)
-    elif os.environ['SELENIUM']:
+    else:
         if os.getenv('HEADLESS'):
             options.add_argument('--headless')
         driver_browser = webdriver.Remote(ChromeDriverManager().install(), options=options)
-    else:
-        raise Exception("Incorrect params, required only SELENOID/SELENIUM and optional HEADLESS")
 
     driver_browser.set_window_size(1920, 1080)
     return driver_browser
