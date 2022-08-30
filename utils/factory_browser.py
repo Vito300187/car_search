@@ -20,7 +20,7 @@ def get_driver():
     else:
         if os.getenv('HEADLESS'):
             options.add_argument('--headless')
-        driver_browser = webdriver.Remote(ChromeDriverManager().install(), options=options)
+        driver_browser = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 
     driver_browser.set_window_size(1920, 1080)
     return driver_browser
