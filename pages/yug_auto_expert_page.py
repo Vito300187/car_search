@@ -12,6 +12,7 @@ class YugAutoExpertPage(BasePage):
     open_preferences_button_xpath = "//span[contains(text(), 'Все параметры')]"
     top_menu_city_xpath = "//span[@role='top-menu-city']"
     top_menu_city_list_xpath = "//div[contains(@class, 'top-menu-city-list')]"
+    jivo_close_button_xpath = '//jdiv[contains(@id, "jivo_close_button")]/jdiv'
     transmission_placeholder_locator = (
         By.XPATH,
         '//span[contains(@class, "multiselect__placeholder") and contains(text(), "КПП")]'
@@ -59,13 +60,14 @@ class YugAutoExpertPage(BasePage):
     def _open_preferences(self):
         self.driver.find_element(By.XPATH, self.open_preferences_button_xpath).click()
 
-    def close_widget(self):
-        self.wait_time(20)
-        close_widgets_list = self.driver.find_elements(
-            By.XPATH,
-            self.yapps_widget_close_xpath
-        )
+    def close_widgets(self):
+        waiting_timeout_banner_and_jdiv = 20
+        self.wait_time(waiting_timeout_banner_and_jdiv)
+        close_widgets_list = self.driver.find_elements(By.XPATH, self.yapps_widget_close_xpath)
+        close_jivo_player = self.driver.find_element(By.XPATH, self.jivo_close_button_xpath)
+
         close_widgets = list(filter(lambda x: x.is_displayed(), close_widgets_list))
+        close_jivo_player.click()
         if any(close_widgets):
             close_widgets[0].click()
             print('Widget was closed')

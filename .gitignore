@@ -1,5 +1,6 @@
 tasks_list.md
 .idea/
 dump.rdb
-.venv/
+venv/
 */__pycache__/
+.DS_Store

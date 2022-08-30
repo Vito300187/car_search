@@ -12,7 +12,7 @@ class TestParsers(BaseTest):
     def test_parser_yug_auto_expert_tucson(self, car):
         self.visit_to(Board(car).get_yug_auto_expert_url())
         yug_auto_expert_page = YugAutoExpertPage(self.driver, car)
-        yug_auto_expert_page.close_widget()
+        yug_auto_expert_page.close_widgets()
         yug_auto_expert_page.set_filters()
         page = yug_auto_expert_page.page_source()
         try:
