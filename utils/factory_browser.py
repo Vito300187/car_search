@@ -8,12 +8,15 @@ def get_driver():
     options.add_experimental_option('excludeSwitches', ['enable-automation'])
 
     if os.environ['SELENOID']:
-        desired_capabilities = {
-            "browserName": 'chrome',
-            "enableVNC": True,
-            "enableVideo": True
+        capabilities = {
+            "browserName": "chrome",
+            "browserVersion": "104.0",
+            "selenoid:options": {
+                "enableVNC": True,
+                "enableVideo": False
+            }
         }
-        driver_browser = webdriver.Remote('http://localhost:4444/wd/hub', options=options, desired_capabilities=desired_capabilities)
+        driver_browser = webdriver.Remote('http://localhost:4444/wd/hub', options=options, desired_capabilities=capabilities)
     elif os.environ['SELENIUM']:
         if os.getenv('HEADLESS'):
             options.add_argument('--headless')
