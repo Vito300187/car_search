@@ -60,17 +60,23 @@ class YugAutoExpertPage(BasePage):
     def _open_preferences(self):
         self.driver.find_element(By.XPATH, self.open_preferences_button_xpath).click()
 
-    def close_widgets(self):
+    def _close_widgets_list(self):
         waiting_timeout_banner_and_jdiv = 20
         self.wait_time(waiting_timeout_banner_and_jdiv)
         close_widgets_list = self.driver.find_elements(By.XPATH, self.yapps_widget_close_xpath)
-        close_jivo_player = self.driver.find_element(By.XPATH, self.jivo_close_button_xpath)
-
         close_widgets = list(filter(lambda x: x.is_displayed(), close_widgets_list))
-        close_jivo_player.click()
         if any(close_widgets):
             close_widgets[0].click()
             print('Widget was closed')
+
+    def _close_jivo_player(self):
+        if self.is_element_displayed((By.XPATH, self.jivo_close_button_xpath)):
+            self.driver.find_element(By.XPATH, self.jivo_close_button_xpath).click()
+            print('Jivo player was closed')
+
+    def close_widgets(self):
+        self._close_widgets_list()
+        self._close_jivo_player()
 
     def set_filters(self):
         self._choose_city()
