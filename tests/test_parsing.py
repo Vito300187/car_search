@@ -13,10 +13,8 @@ class TestParsers(BaseTest):
         self.visit_to(Board(car).get_yug_auto_expert_url())
         yug_auto_expert_page = YugAutoExpertPage(self.driver, car)
         yug_auto_expert_page.close_widgets()
-        yug_auto_expert_page.set_filters()
-        page = yug_auto_expert_page.page_source()
-        try:
+        is_cars_present = yug_auto_expert_page.set_filters()
+        if is_cars_present:
+            page = yug_auto_expert_page.page_source()
             parsing_result = YugAutoExpertParser(page).parse()
             public_ad_in_telegram(parsing_result)
-        except:
-            print('An unexpected error has occurred')

@@ -44,8 +44,10 @@ class YugAutoExpertPage(BasePage):
         if self.is_element_displayed(list_item_name, timeout=3):
             self.driver.find_element(*list_item_name).click()
             self.wait_for_element_visibility(list_tags, timeout=5)
+            return True
         else:
-            raise Exception('Models are not present on the page')
+            print('Cars not present')
+            return False
 
     def _choose_transmission(self):
         self.driver.find_element(*self.transmission_placeholder_locator).click()
@@ -80,10 +82,10 @@ class YugAutoExpertPage(BasePage):
 
     def set_filters(self):
         self._choose_city()
-        self._choose_brand()
-        self._choose_model()
         self._open_preferences()
         self._choose_transmission()
+        self._choose_brand()
+        return self._choose_model()
 
     def page_source(self):
         return self.driver.page_source
