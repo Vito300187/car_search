@@ -10,7 +10,7 @@ class YugAutoExpertPage(BasePage):
     )
     yapps_widget_close_xpath = "//div[contains(@id, 'YAppWidgets')]//div[contains(@class, 'YApps_Widget--Close')]"
     open_preferences_button_xpath = "//span[contains(text(), 'Все параметры')]"
-    top_menu_city_xpath = "//span[@role='top-menu-city']"
+    top_menu_city_xpath = '//a[contains(text(), "Все города")]'
     top_menu_city_list_xpath = "//div[contains(@class, 'top-menu-city-list')]"
     jivo_close_button_xpath = '//jdiv[contains(@id, "jivo_close_button")]/jdiv'
     transmission_placeholder_locator = (
@@ -25,7 +25,7 @@ class YugAutoExpertPage(BasePage):
 
     def _choose_city(self, city='Краснодар'):
         self.driver.find_element(By.XPATH, self.top_menu_city_xpath).click()
-        self.driver.find_element(By.XPATH, f"{self.top_menu_city_list_xpath}//a[@data-city='{city}']").click()
+        self.driver.find_element(By.XPATH, f"//a[contains(text(), '{city}')]").click()
         self.wait_time(3)
 
     def _choose_brand(self):
